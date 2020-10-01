@@ -24,9 +24,9 @@ if(NOT Python_NumPy_FOUND)
     else(PYTHON_NUMPY_PROCESS EQUAL 0)
         message(SEND_ERROR "Could not determine the NumPy include directory, verify that NumPy was installed correctly.")
     endif(PYTHON_NUMPY_PROCESS EQUAL 0)
- endif(NOT PYTHON_NUMPY_INCLUDE_DIR)
+endif()
 
-include_directories(${PYTHON_INCLUDE_PATH} ${Boost_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
+include_directories(${Python_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
 
 if (Python_VERSION_MAJOR VERSION_EQUAL 3)
   add_compile_definitions(PYTHON3)
