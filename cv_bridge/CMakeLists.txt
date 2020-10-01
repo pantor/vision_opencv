@@ -23,8 +23,6 @@ find_package(OpenCV 4 REQUIRED
   CONFIG
 )
 
-message(${OpenCV_VERSION_MAJOR})
-
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
