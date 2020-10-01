@@ -26,7 +26,7 @@ if(NOT Python_NumPy_FOUND)
     endif(PYTHON_NUMPY_PROCESS EQUAL 0)
  endif(NOT PYTHON_NUMPY_INCLUDE_DIR)
 
-include_directories(${PYTHON_INCLUDE_PATH} ${Boost_INCLUDE_DIRS} ${PYTHON_NUMPY_INCLUDE_DIR})
+include_directories(${PYTHON_INCLUDE_PATH} ${Boost_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
 
 if (Python_VERSION_MAJOR VERSION_EQUAL 3)
   add_compile_definitions(PYTHON3)
@@ -41,7 +41,7 @@ add_library(${PROJECT_NAME}_boost module.cpp module_opencv2.cpp)
 endif()
 target_link_libraries(${PROJECT_NAME}_boost ${Boost_LIBRARIES}
                                             ${catkin_LIBRARIES}
-                                            ${PYTHON_LIBRARIES}
+                                            ${Python_LIBRARIES}
                                             ${PROJECT_NAME}
 )
 
