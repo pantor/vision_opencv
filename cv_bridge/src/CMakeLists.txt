@@ -8,12 +8,12 @@ install(TARGETS ${PROJECT_NAME} DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 
 if(NOT ANDROID)
 # add a Boost Python library
-find_package(PythonInterp REQUIRED)
-find_package(PythonLibs "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
+
+find_package(Python 3.6 REQUIRED COMPONENTS Interpreter Development NumPy)
 
 #Get the numpy include directory from its python module
-if(NOT PYTHON_NUMPY_INCLUDE_DIR)
-    execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "import numpy; print(numpy.get_include())"
+if(NOT Python_NumPy_FOUND)
+    execute_process(COMMAND ${Python_EXECUTABLE} -c "import numpy; print(numpy.get_include())"
                     RESULT_VARIABLE PYTHON_NUMPY_PROCESS
                     OUTPUT_VARIABLE PYTHON_NUMPY_INCLUDE_DIR
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -28,11 +28,13 @@ if(NOT PYTHON_NUMPY_INCLUDE_DIR)
 
 include_directories(${PYTHON_INCLUDE_PATH} ${Boost_INCLUDE_DIRS} ${PYTHON_NUMPY_INCLUDE_DIR})
 
-if (PYTHON_VERSION_MAJOR VERSION_EQUAL 3)
-  add_definitions(-DPYTHON3)
+if (Python_VERSION_MAJOR VERSION_EQUAL 3)
+  add_compile_definitions(PYTHON3)
 endif()
 
-if (OpenCV_VERSION_MAJOR VERSION_EQUAL 3)
+if (OpenCV_VERSION_MAJOR VERSION_GREATER_EQUAL 4)
+add_library(${PROJECT_NAME}_boost module.cpp module_opencv4.cpp)
+elseif(OpenCV_VERSION_MAJOR VERSION_EQUAL 3)
 add_library(${PROJECT_NAME}_boost module.cpp module_opencv3.cpp)
 else()
 add_library(${PROJECT_NAME}_boost module.cpp module_opencv2.cpp)
